@@ -16,11 +16,12 @@ export default {
 }
 </script>
 <style lang="scss">
-$color: red;
+$color: #000;
 
 button {
+    outline: none;
     border: 2px solid $color;
-    margin: 0px;
+    margin: 5px;
     padding: 3px;
 }
 </style>

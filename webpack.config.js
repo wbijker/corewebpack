@@ -1,11 +1,17 @@
 const path = require('path')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        main: './src/index.js',
+        a: './src/a.js',
+        b: './src/b.js',
+        lib: './src/lib.js'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
+        filename: '[name].js',
         publicPath: 'webpack'
     },
     devServer: {
@@ -30,14 +36,21 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
-                    // loaders: {
-                    //     js: 'babel-loader!eslint-loader'
-                    // }
+                    loaders: {
+                        js: 'babel-loader'
+                    }
                 }
             }
         ]
     },
     plugins: [
-        new FriendlyErrorsWebpackPlugin()
-    ],
+        new FriendlyErrorsWebpackPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            // Chunk name. Array of strings is equal to invoking the plugin multiple times for each chunk name
+            name: 'commons',
+            chunks: ['main', 'a', 'b'],
+            // (the commons chunk name
+            filename: "commons.js"
+        })
+    ]
 }
