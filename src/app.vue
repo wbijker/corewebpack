@@ -20,7 +20,7 @@ $color: #000;
 
 button {
     outline: none;
-    border: 2px solid $color;
+    border: 1px solid $color;
     margin: 5px;
     padding: 3px;
 }

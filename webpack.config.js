@@ -4,15 +4,15 @@ const webpack = require('webpack')
 
 module.exports = {
     entry: {
-        main: './src/index.js',
-        a: './src/a.js',
-        b: './src/b.js',
-        lib: './src/lib.js'
+        main: './src/index.js'
     },
+    // a: './src/a.js',
+    // b: './src/b.js',
+    // lib: './src/lib.js'
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
-        publicPath: 'webpack'
+        publicPath: '/webpack/'
     },
     devServer: {
         overlay: true,
@@ -45,12 +45,13 @@ module.exports = {
     },
     plugins: [
         new FriendlyErrorsWebpackPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            // Chunk name. Array of strings is equal to invoking the plugin multiple times for each chunk name
-            name: 'commons',
-            chunks: ['main', 'a', 'b'],
-            // (the commons chunk name
-            filename: "commons.js"
-        })
+        new webpack.HotModuleReplacementPlugin()
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     // Chunk name. Array of strings is equal to invoking the plugin multiple times for each chunk name
+        //     name: 'commons',
+        //     chunks: ['main', 'a', 'b'],
+        //     // (the commons chunk name
+        //     filename: "commons.js"
+        // })
     ]
 }
