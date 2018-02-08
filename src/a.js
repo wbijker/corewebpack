@@ -1,5 +1,5 @@
-import Vue from 'vue'
 import Lib from './lib'
+import Big from './big'
 
-console.log('From a', Vue.version)
-console.log(Lib);
+console.log('a.js', Lib);
+console.log('Big text', Big);

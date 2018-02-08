@@ -1,2 +1,4 @@
-import Vue from 'vue'
-console.log('From b', Vue.version)
+import Lib from './lib'
+// import Big from './biglib'
+
+console.log('b.js', Lib);
