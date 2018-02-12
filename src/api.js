@@ -1,18 +1,29 @@
-// var Entry = require('./entry.js')
+var path = require('path')
+
+function getProjectSource() {
+    // This file is located in in node_modules/dotnetapi/src/api.js
+    // We want the source of the original project.
+    // Need to move up three directories
+    return path.resolve([__dirname, '../../../')
+}
+
+
 
 var api = {
     _entry: {},
     _extracts: [],
     _extractCSS: [],
     _css: [],
+    _projectSource: getProjectSource(),
 
     entry: function(entry) {
         this._entry = entry;
     },
-    extract: function(modules, name) {
+    extract: function(modules, name, chunks) {
         this._extracts.push({
             modules,
-            name
+            name,
+            chunks
         })
     },
     extractCSS: function(modules, name) {
