@@ -2,7 +2,7 @@
   "name": "webpackdotnet",
   "version": "1.0.0",
   "description": "webpack As you've described, Webpack is a module bundler, it bundles various module formats primarily so they can be run in a browser. It offers both a CLI and Node API.",
-  "main": "index.js",
+  "main": "./src/api.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot"
   },

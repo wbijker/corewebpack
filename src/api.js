@@ -1,23 +1,24 @@
 var path = require('path')
 
 function getProjectSource() {
-    // This file is located in in node_modules/dotnetapi/src/api.js
+    // In dev mode use symbolic link path rather then actual path
+    return '/Users/Willem/temp/usedotnetwebpack'
+
+    // This file is located in in node_modules/usedotnetwebpack/src/api.js
     // We want the source of the original project.
     // Need to move up three directories
-    return path.resolve([__dirname, '../../../')
+    return path.resolve(path.join(__dirname, '../../../'));
 }
 
-
-
 var api = {
-    _entry: {},
+    _entries: {},
     _extracts: [],
     _extractCSS: [],
     _css: [],
     _projectSource: getProjectSource(),
 
-    entry: function(entry) {
-        this._entry = entry;
+    entries: function(entries) {
+        this._entries = entries;
     },
     extract: function(modules, name, chunks) {
         this._extracts.push({
