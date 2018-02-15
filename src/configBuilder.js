@@ -16,7 +16,11 @@ module.exports = function(api) {
         devServer: {
             overlay: true,
             inline: true,
-            hot: true
+            hot: true,
+            publicPath: '/webpack/',
+            stats: {
+                colors: true
+            }
         },
         module: {
             rules: defaultRules(api)

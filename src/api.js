@@ -7,6 +7,13 @@ module.exports = {
     _extractCSS: [],
     _css: [],
 
+    _config: {
+        port: 8080,
+        host: 'localhost',
+        openBrowser: true,
+        analyzeChunks: false,
+    },
+
     entries: function(entries) {
         // Entires just like normal webpack entry configuration
         this._entries = entries;
