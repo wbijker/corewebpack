@@ -1,19 +1,10 @@
 // Run dev server with options provided by host app using API
 var path = require('path')
 var fs = require('fs')
-
-function getHostFile(file) {
-    // In dev mode use symbolic link path rather then actual path
-    return path.resolve(path.join('/Users/Willem/temp/usedotnetwebpack', file))
-
-    // This file is located in in node_modules/usedotnetwebpack/src/api.js
-    // We want the source of the original project.
-    // Need to move up three directories
-    return path.resolve(path.join(__dirname, '../../../', file))
-}
+var helper = require('./helper')
 
 // include api from host application
-var configFile = getHostFile('webpack.js')
+var configFile = helper.projectPath('webpack.js')
 if (!fs.existsSync(configFile)) {
     throw Error('Webpack configuration file not found. Searched path ' + configFile)
 }
@@ -23,6 +14,24 @@ var api = require('./api.js')
 var config = require(configFile)
 
 // Now generate a webpack config file with the API container
-var webpackConfig = require('./webpackConfigBuilder.js')(api)
+var config = require('./webpackConfigBuilder.js')(api)
+const WebpackDevServer = require('webpack-dev-server');
 
-console.dir(webpackConfig)
+console.log('All done')
+
+// // add the webpack-dev-server client entry point to the webpack configuration.
+// for (var k in config.entry) {
+//     config.entry[k] = [config.entry[k],  'webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080']
+// }
+
+// const compiler = webpack(config)
+
+// var server = new WebpackDevServer(compiler,
+// {
+//     overlay: true,
+//     inline: true,
+//     hot: true,
+//     publicPath: config.output.publicPath
+// });
+// server.listen(8080);
+

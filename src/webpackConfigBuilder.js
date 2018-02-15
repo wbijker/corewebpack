@@ -3,12 +3,13 @@
 var webpack = require('webpack')
 var defaultRules = require('./rules')
 var path = require('path')
+var helper = require('./helper')
 
 module.exports = function(api) {
     var config =  {
         entry: api._entries,
         output: {
-            path: path.resolve(__dirname, 'dist'),
+            path: helper.projectPath('dist'),
             filename: '[name].js',
             publicPath: '/webpack/'
         },
