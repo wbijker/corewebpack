@@ -13,7 +13,7 @@ var api = require('./api.js')
 var config = require(configFile)
 
 // Now generate a webpack config file with the API container
-var config = require('./webpackConfigBuilder.js')(api)
+var config = require('./configBuilder.js')(api)
 
 var Webpack = require('webpack')
 var WebpackDevServer = require('webpack-dev-server');
@@ -34,4 +34,3 @@ var server = new WebpackDevServer(compiler,
 });
 
 server.listen(8080);
-
