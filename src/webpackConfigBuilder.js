@@ -21,7 +21,9 @@ module.exports = function(api) {
         module: {
             rules: defaultRules(api)
         },
-        plugins: []
+        plugins: [
+            new webpack.HotModuleReplacementPlugin()
+        ]
     }
 
     return config
