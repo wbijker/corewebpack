@@ -22,4 +22,7 @@ if (!fs.existsSync(configFile)) {
 var api = require('./api.js')
 var config = require(configFile)
 
-console.log('Now we need to work with ', api._entries)
+// Now generate a webpack config file with the API container
+var webpackConfig = require('./webpackConfigBuilder.js')(api)
+
+console.dir(webpackConfig)
