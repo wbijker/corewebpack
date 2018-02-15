@@ -1,5 +1,6 @@
-// // Run dev server with options provided by host app using API
+// Run dev server with options provided by host app using API
 var path = require('path')
+var fs = require('fs')
 
 function getHostFile(file) {
     // In dev mode use symbolic link path rather then actual path
@@ -13,6 +14,12 @@ function getHostFile(file) {
 
 // include api from host application
 var configFile = getHostFile('webpack.js')
-console.log('This is the config file', configFile)
+if (!fs.existsSync(configFile)) {
+    throw Error('Webpack configuration file not found. Searched path ' + configFile)
+}
+
+// Get reference to api. Webpack.js is making changes to this files
+var api = require('./api.js')
 var config = require(configFile)
-console.log('Api file', config)
+
+console.log('Now we need to work with ', api._entries)
