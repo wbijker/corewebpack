@@ -10,19 +10,18 @@ if (!Fs.existsSync(configFile)) {
 
 // Get reference to api. Webpack.js is making changes to this files
 var api = require('./api.js')
+// Mark as dev
+api._dev = false;
+
 var config = require(configFile)
 
 // Now generate a webpack config file with the API container
 var config = require('./configBuilder.js')(api)
 
 var httpUrl = 'http://' + api._config.host + ':' + api._config.port
-
 var Webpack = require('webpack')
-var WebpackDevServer = require('webpack-dev-server');
 
-var development = false
-
-if (development) {
+if (api._dev) {
     // Webpack-dev-server module has no access to the webpack configuration. 
     // Instead, the user must add the webpack-dev-server client entry point to the webpack configuration.
     // https://github.com/webpack/docs/wiki/webpack-dev-server
@@ -33,7 +32,8 @@ if (development) {
 
 const compiler = Webpack(config)
 
-if (development) {
+if (api._dev) {
+    var WebpackDevServer = require('webpack-dev-server');
     var server = new WebpackDevServer(compiler, config.devServer)
 
     server.listen(api._config.port, api._config.host, function() {

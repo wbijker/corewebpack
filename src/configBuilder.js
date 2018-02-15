@@ -6,9 +6,10 @@ var Helper = require('./helper')
 var Plugins = require('./plugins')
 
 module.exports = function(api) {
-    var plugins = [
-        new Webpack.HotModuleReplacementPlugin()
-    ]
+    var plugins = []
+    if (api._dev) {
+        plugins.push(new Webpack.HotModuleReplacementPlugin())
+    }
     var rules = DefaultRules(api)
     // Add custom rules added by API
     if (api._rules.length > 0) {

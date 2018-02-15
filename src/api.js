@@ -10,6 +10,7 @@ module.exports = {
     _rules: [],
     // Additional plugins
     _plugins: [],
+    _dev: false,
 
     _config: {
         port: 8080,
