@@ -1,6 +1,5 @@
 // Default rules for webpack configuration file
 
-
 module.exports = function(api) {
     return [
         {

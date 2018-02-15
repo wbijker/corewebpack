@@ -6,12 +6,17 @@ module.exports = {
     _extracts: [],
     _extractCSS: [],
     _css: [],
+    // Additional rules
+    _rules: [],
+    // Additional plugins
+    _plugins: [],
 
     _config: {
         port: 8080,
         host: 'localhost',
         openBrowser: true,
-        analyzeChunks: false,
+        // use webpack-bundle-analyzer plugin
+        analyzeBundle: false,
     },
 
     entries: function(entries) {
@@ -40,5 +45,14 @@ module.exports = {
         // a css entry just like entry, but will only generate a CSS file 
         // no with a JS file combined
         this._css.push(entry);
+    },
+    
+    addRule(rule) {
+        this._rules.push(rule)
+    },
+
+    addPlugin(plugin) {
+        this._plugins.push(plugin)
     }
+
 }
