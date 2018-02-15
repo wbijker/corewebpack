@@ -1,10 +1,11 @@
 // Default rules for webpack configuration file
 
+
 module.exports = function(api) {
     return [
         {
             test: /\.js$/,
-            exclude: 'node_modules',
+            exclude: /node_modules/,
             use: {
                 loader: 'babel-loader',
                 options: {
