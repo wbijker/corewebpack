@@ -1,7 +1,7 @@
 // Default rules for webpack configuration file
 
 module.exports = function(api) {
-    return [
+    var rules =  [
         {
             test: /\.js$/,
             exclude: /node_modules/,
@@ -21,6 +21,16 @@ module.exports = function(api) {
                     js: 'babel-loader'
                 }
             }
-        }
+        },
     ]
+
+    rules.concat(rules, api._extractCSS.map(e => 
+        // extract common CSS into seperate chunks
+        ({    
+            // maybe rule.Condition
+            test: e.test,
+            use: extractCSS.extract([ 'css-loader', 'postcss-loader' ])
+        })
+    ))
+    return rules
 }

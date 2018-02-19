@@ -2,6 +2,7 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 var Helper = require('./helper')
 var Path = require('path')
 var Webpack = require('webpack')
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 function isIncluded(module, entry) {
     if (entry.charAt(0) == '.') {
@@ -40,4 +41,9 @@ module.exports = function(api, list) {
 
     // Add commonChunks plugin
     api._extracts.forEach(entry => list.push(createCommonChunk(entry)))
+
+    // Add manifest plugin for linking server side with client side 
+    // Will generate manifest.json
+    list.push(new ManifestPlugin())
+    return list    
 }

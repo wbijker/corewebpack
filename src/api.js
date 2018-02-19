@@ -35,9 +35,9 @@ module.exports = {
         })
     },
 
-    extractCSS: function(modules, name) {
+    extractCSS: function(test, name) {
         this._extractCSS.push({
-            modules, 
+            test, 
             name
         })
     },

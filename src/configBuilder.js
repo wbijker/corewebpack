@@ -9,7 +9,16 @@ module.exports = function(api) {
     var plugins = []
     if (api._dev) {
         plugins.push(new Webpack.HotModuleReplacementPlugin())
+    } else {
+        // Production plugins
+        plugins.push(new Webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+            sourceMap: true
+        }))
     }
+
     var rules = DefaultRules(api)
     // Add custom rules added by API
     if (api._rules.length > 0) {
