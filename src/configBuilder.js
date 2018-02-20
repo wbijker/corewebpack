@@ -27,10 +27,9 @@ function createCommonChunk(entry) {
         minChunks: 2
     }
     // var type = typeof entry.modules
-    if (Array.isArray(entry.module)) {
+    if (Array.isArray(entry.modules)) {
         obj.minChunks = function(module, count) {
             // return true if some of the modules is included in path
-            console.log('Entry.modules', entry, entry.modules)
             return entry.modules.some(e => isIncluded(module, e))
         }
     } else if (typeof entry.modules == 'function') {
