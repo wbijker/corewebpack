@@ -10,25 +10,15 @@ if (!Fs.existsSync(configFile)) {
 
 // Get reference to api. Webpack.js is making changes to this files
 var api = require('./api.js')
-// Mark as dev
-api._dev = false;
+api.setMode(process.argv[2] || 'dev')
 
+// Allow user to set mode
 var config = require(configFile)
 
 // Now generate a webpack config file with the API container
 var config = require('./configBuilder.js')(api)
 
-var httpUrl = 'http://' + api._config.host + ':' + api._config.port
 var Webpack = require('webpack')
-
-if (api._dev) {
-    // Webpack-dev-server module has no access to the webpack configuration. 
-    // Instead, the user must add the webpack-dev-server client entry point to the webpack configuration.
-    // https://github.com/webpack/docs/wiki/webpack-dev-server
-    for (var k in config.entry) {
-        config.entry[k] = [config.entry[k],  'webpack/hot/dev-server', 'webpack-dev-server/client?' + httpUrl]
-    }
-}
 
 const compiler = Webpack(config)
 
@@ -40,7 +30,7 @@ if (api._dev) {
         if (api._config.openBrowser) {
             // Seems like webpack's open and openPage does not work
             const opn = require('opn');
-            opn(httpUrl)
+            opn(api.getUrl())
         }
     });
 

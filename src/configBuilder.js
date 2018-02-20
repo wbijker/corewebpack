@@ -105,9 +105,22 @@ function generatePlugins(api) {
     return plugins    
 }
 
+function createEntries(api) {
+    if (api.isDev()) {
+        // Webpack-dev-server module has no access to the webpack configuration. 
+        // Instead, the user must add the webpack-dev-server client entry point to the webpack configuration.
+        // https://github.com/webpack/docs/wiki/webpack-dev-server
+        for (var k in api.config.entries) {
+            api.config.entries[k] = [api.config.entries[k],  'webpack/hot/dev-server', 'webpack-dev-server/client?' + api.getUrl()]
+        }
+    }
+    return api.config.entries
+}
+
+
 module.exports = function(api) {
     var config =  {
-        entry: api._entries,
+        entry: createEntries(api),
         output: {
             path: Helper.projectPath('dist'),
             filename: '[name].js',
