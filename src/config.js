@@ -42,6 +42,12 @@ export default function() {
         analyzeBundle: false,
         
         // Customize logo for the notification
-        logo: 'logo.png'
+        logo: 'logo.png',
+
+        // public exposable URL needed to setup webpack dev server module 
+        // and to open default browser if setting is enabled.
+        getUrl() {
+            return `http://${this.config.host}:${this.config.port}`
+        }
     }
 }

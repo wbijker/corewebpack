@@ -17,14 +17,6 @@ class Api {
         this.config.mode = index
     }
 
-    isDev() {
-        return this.config.mode == 0
-    }
-
-    isProd() {
-        return this.config.mode == 1
-    }
-
     sourceMaps(options) {
         // todo add options here
         this.config.sourceMaps = true
@@ -118,12 +110,6 @@ class Api {
 
     addPlugin(plugin) {
         config.plugins.push(plugin)
-    }
-
-    // public exposable URL needed to setup webpack dev server module 
-    // and to open default browser if setting is enabled.
-    getUrl() {
-        return `http://${this.config.host}:${this.config.port}`
     }
 }
 

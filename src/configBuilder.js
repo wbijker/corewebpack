@@ -37,7 +37,7 @@ function createCommonChunk(entry) {
     return new Webpack.optimize.CommonsChunkPlugin(obj)
 }
 
-function generateRules(api) {
+function generateRules(config) {
     var rules =  [
         {
             test: /\.js$/,
@@ -61,20 +61,20 @@ function generateRules(api) {
         },
     ]
 
-    rules.concat(rules, api._extractCSS.map(e => 
-        // extract common CSS into seperate chunks
+    // extract common CSS into seperate chunks
+    rules.concat(rules, config.extractCSS.map(e => 
         ({    
             // maybe rule.Condition?
             test: e.test,
-            use: extractCSS.extract([ 'css-loader', 'postcss-loader' ])
+            use: extractCSS.extract(['css-loader', 'postcss-loader'])
         })
     ))
     return rules
 }
 
-function generatePlugins(api) {
+function generatePlugins(config) {
     var plugins = []
-    if (api._dev) {
+    if (config.mode == 0) {
         plugins.push(new Webpack.HotModuleReplacementPlugin())
     } else {
         // Production plugins
@@ -86,14 +86,14 @@ function generatePlugins(api) {
         }))
     }
 
-    if (api._config.analyzeBundle) {
+    if (config.analyzeBundle) {
         plugins.push(new BundleAnalyzerPlugin({analyzerMode: 'static'}))
     }
 
     // Add commonChunks plugin
-    api._extracts.forEach(entry => plugins.push(createCommonChunk(entry)))
+    config.extracts.forEach(entry => plugins.push(createCommonChunk(entry)))
 
-    if (api.extractCSS.length > 0) {
+    if (config.extractCSS.length > 0) {
         plugins.push(new ExtractTextPlugin({
             filename: 'style.css'
         }))
@@ -105,22 +105,21 @@ function generatePlugins(api) {
     return plugins    
 }
 
-function createEntries(api) {
-    if (api.isDev()) {
+function createEntries(config) {
+    if (config.mode == 0) {
         // Webpack-dev-server module has no access to the webpack configuration. 
         // Instead, the user must add the webpack-dev-server client entry point to the webpack configuration.
         // https://github.com/webpack/docs/wiki/webpack-dev-server
-        for (var k in api.config.entries) {
-            api.config.entries[k] = [api.config.entries[k],  'webpack/hot/dev-server', 'webpack-dev-server/client?' + api.getUrl()]
+        for (var k in config.entries) {
+            config.entries[k] = [config.entries[k],  'webpack/hot/dev-server', 'webpack-dev-server/client?' + config.getUrl()]
         }
     }
-    return api.config.entries
+    return config.entries
 }
 
-
-module.exports = function(api) {
-    var config =  {
-        entry: createEntries(api),
+export default function(config) {
+    let webapckConfig = {
+        entry: createEntries(config),
         output: {
             path: Helper.projectPath('dist'),
             filename: '[name].js',
@@ -136,9 +135,9 @@ module.exports = function(api) {
             }
         },
         module: {
-            rules: generateRules(api),
+            rules: generateRules(config),
         },
-        plugins: generatePlugins(api)
+        plugins: generatePlugins(config)
     }
-    return config
+    return webapckConfig
 }
