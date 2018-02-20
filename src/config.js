@@ -1,9 +1,9 @@
-export default function() {
+module.exports =  function() {
     return {
         // Standard webpack entries object
         entries: {},
 
-        // List of what modules or scrips should be extracted
+        // List of what modules or scripts should be extracted
         extracts: [],
 
         // List of css modules to be extracted into one CSS file
@@ -47,7 +47,7 @@ export default function() {
         // public exposable URL needed to setup webpack dev server module 
         // and to open default browser if setting is enabled.
         getUrl() {
-            return `http://${this.config.host}:${this.config.port}`
+            return `http://${this.host}:${this.port}`
         }
     }
 }

@@ -1,6 +1,5 @@
 // api is only a container for holding configuration related options
-
-import Config from './config'
+var Config = require('./config')
 
 class Api {
 
@@ -71,27 +70,27 @@ class Api {
             },
             chunkName,
             // Apply to all chunks
-            applyToChunks: null
+            targetChunks: null
         })
         if (manifestName) {
             this.config.extracts.push({
                 modules: Infinity,
                 chunkName: manifestName,
-                applyToChunks: null
+                targetChunks: null
             })
         }
     }
 
-    extract(modules, chunkName, applyToChunks) {
+    extract(modules, chunkName, targetChunks) {
         // Make sure all chunks exists
-        if (applyToChunks && !applyToChunks.every(c => this.entries[c])) {
+        if (targetChunks && !targetChunks.every(c => this.entries[c])) {
             throw new Error(`Some chunks does not exits trying to create '${chunkName}' chunk.`)
         }
 
         this.config.extracts.push({
             modules,
             chunkName,
-            applyToChunks
+            targetChunks
         })
     }
     
@@ -113,4 +112,4 @@ class Api {
     }
 }
 
-export default new Api()
+module.exports = new Api()

@@ -22,16 +22,19 @@ function isIncluded(module, entry) {
 
 function createCommonChunk(entry) {
     var obj = {
-        name: entry.name,
-        chunks: entry.chunks || null,
+        name: entry.chunkName,
+        chunks: entry.targetChunks || null,
         minChunks: 2
     }
-
-    if (entry.modules && entry.modules.length > 0) {
+    // var type = typeof entry.modules
+    if (Array.isArray(entry.module)) {
         obj.minChunks = function(module, count) {
             // return true if some of the modules is included in path
+            console.log('Entry.modules', entry, entry.modules)
             return entry.modules.some(e => isIncluded(module, e))
         }
+    } else if (typeof entry.modules == 'function') {
+        obj.minChunks = module.modules
     }
 
     return new Webpack.optimize.CommonsChunkPlugin(obj)
@@ -102,7 +105,7 @@ function generatePlugins(config) {
     // Add manifest plugin for linking server side with client side 
     // Will generate manifest.json
     plugins.push(new ManifestPlugin())
-    return plugins    
+    return plugins
 }
 
 function createEntries(config) {
@@ -117,7 +120,7 @@ function createEntries(config) {
     return config.entries
 }
 
-export default function(config) {
+module.exports = function(config) {
     let webapckConfig = {
         entry: createEntries(config),
         output: {

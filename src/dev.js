@@ -16,21 +16,20 @@ api.setMode(process.argv[2] || 'dev')
 var config = require(configFile)
 
 // Now generate a webpack config file with the API container
-var config = require('./configBuilder.js')(api)
+var config = require('./configBuilder.js')(api.config)
 
 var Webpack = require('webpack')
-
 const compiler = Webpack(config)
 
-if (api._dev) {
+if (api.config.mode == 0) {
     var WebpackDevServer = require('webpack-dev-server');
     var server = new WebpackDevServer(compiler, config.devServer)
 
-    server.listen(api._config.port, api._config.host, function() {
-        if (api._config.openBrowser) {
+    server.listen(api.config.port, api.config.host, function() {
+        if (api.config.openBrowser) {
             // Seems like webpack's open and openPage does not work
             const opn = require('opn');
-            opn(api.getUrl())
+            opn(api.config.getUrl())
         }
     });
 
